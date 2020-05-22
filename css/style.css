@@ -1,2 +1,7 @@
 * { box-sizing: border-box; }
 body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
+
+#logo {
+  will-change: transform, color;
+  transform-origin: 0 0;
+}
