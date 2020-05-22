@@ -1,4 +1,4 @@
-const logo = document.querySelector("#logo");
+const logo = document.querySelector("#logo-wrap");
 const topLeft = document.querySelector("#triangle-top-left");
 const topRight = document.querySelector("#triangle-top-right");
 const bottom = document.querySelector("#triangle-bottom");
@@ -24,19 +24,19 @@ const translateOptions = (args: Array<string>[]): Keyframe[] => {
   });
 }
 
-const breakOutAnimationTopLeft = [
+const breakOutAnimationTopLeft: Array<string>[] = [
   ['0px', '0px'],
   ['-3px', '-3px'],
   ['0px', '0px']
 ];
 
-const breakOutAnimationTopRight = [
+const breakOutAnimationTopRight: Array<string>[] = [
   ['0px', '0px'],
   ['3px', '-3px'],
   ['0px', '0px']
 ];
 
-const breakOutAnimationBottom = [
+const breakOutAnimationBottom: Array<string>[] = [
   ['0px', '0px'],
   ['0', '3px'],
   ['0px', '0px']
@@ -55,4 +55,12 @@ topRight.animate(
 bottom.animate(
   translateOptions(breakOutAnimationBottom),
   timingOptions(durationMedium, Infinity)
+);
+
+logo.animate(
+  [
+    { transform: 'rotate(0deg)' },
+    { transform: 'rotate(360deg)' },
+  ],
+  timingOptions(durationSlow, Infinity)
 );
