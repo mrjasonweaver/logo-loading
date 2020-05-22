@@ -1,0 +1,17 @@
+{
+  "name": "logo-loading",
+  "version": "1.0.0",
+  "description": "SVG logo with loading animation",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html -d docs --public-url https://mrjasonweaver.github.io/logo-loading/ --no-minify --no-source-maps",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.9.3"
+  }
+}
