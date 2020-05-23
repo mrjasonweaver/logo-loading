@@ -118,12 +118,12 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"QCba":[function(require,module,exports) {
-var logo = document.querySelector("#logo-wrap");
+var logo = document.querySelector("#logo");
 var topLeft = document.querySelector("#triangle-top-left");
 var topRight = document.querySelector("#triangle-top-right");
 var bottom = document.querySelector("#triangle-bottom");
 var durationSlow = 3000;
-var durationMedium = 1000;
+var durationMedium = 800;
 var durationFast = 500;
 
 var timingOptions = function timingOptions(duration, iterations) {
@@ -141,15 +141,20 @@ var translateOptions = function translateOptions(args) {
   });
 };
 
-var breakOutAnimationTopLeft = [['0px', '0px'], ['-3px', '-3px'], ['0px', '0px']];
-var breakOutAnimationTopRight = [['0px', '0px'], ['3px', '-3px'], ['0px', '0px']];
-var breakOutAnimationBottom = [['0px', '0px'], ['0', '3px'], ['0px', '0px']];
-topLeft.animate(translateOptions(breakOutAnimationTopLeft), timingOptions(durationMedium, Infinity));
-topRight.animate(translateOptions(breakOutAnimationTopRight), timingOptions(durationMedium, Infinity));
-bottom.animate(translateOptions(breakOutAnimationBottom), timingOptions(durationMedium, Infinity));
-logo.animate([{
-  transform: 'rotate(0deg)'
-}, {
-  transform: 'rotate(360deg)'
-}], timingOptions(durationSlow, Infinity));
+var breakOutAnimationTopLeft = [['-5px', '-5px'], ['0px', '0px'], ['-5px', '-5px']];
+var breakOutAnimationTopRight = [['0px', '0px'], ['5px', '-5px'], ['0px', '0px']];
+var breakOutAnimationBottom = [['0px', '0px'], ['0', '8px'], ['0px', '0px']]; // topLeft.animate(
+//   translateOptions(breakOutAnimationTopLeft),
+//   timingOptions(durationMedium, Infinity)
+// );
+// topRight.animate(
+//   translateOptions(breakOutAnimationTopRight),
+//   timingOptions(durationMedium, Infinity)
+// );
+// bottom.animate(
+//   translateOptions(breakOutAnimationBottom),
+//   timingOptions(durationMedium, Infinity)
+// );
+
+logo.animate(translateOptions(breakOutAnimationBottom), timingOptions(durationMedium, Infinity));
 },{}]},{},["QCba"], null)
