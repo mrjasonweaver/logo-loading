@@ -19,6 +19,7 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
 #site-header {
   width: 100%;
   position: fixed;
+  height: 0px;
 }
 #site-header:before {
   content: '';
@@ -44,4 +45,9 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
   top: -400px;
   left: -1500px;
   transform: rotate(25deg);
+}
+
+#main {
+  max-width: 900px;
+  margin: 50px auto 20px;
 }
