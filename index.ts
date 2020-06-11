@@ -7,7 +7,6 @@ const bottom = document.querySelector('#triangle-bottom');
 const username = document.querySelector('#username');
 const userForm = document.querySelector('#getUserForm');
 
-
 userForm.addEventListener('submit', (event): Promise<Object> => {
   event.preventDefault();
   animateLogo(true);
@@ -23,12 +22,11 @@ const fetchUserInfo = async (url: RequestInfo): Promise<Object> => {
   return searchUsers(searchUrl);
 }
 
-const searchUsers = async (url: RequestInfo) => {
+const searchUsers = async (url: RequestInfo): Promise<String[]> => {
   let response = await fetch(url);
   let data = await response.json();
-  console.log(data.items);
   animateLogo(false);
-  return data;
+  return data.items;
 }
 
 interface TimingOptions {
@@ -58,10 +56,10 @@ const breakOutAnimationBottom: Array<string>[] = [
   ['0px', '0px']
 ];
 
-const animateLogo = (playing: boolean) => {
+const animateLogo = (playing: boolean): void => {
   const logoAnimation = logo.animate(
     translateOptions(breakOutAnimationBottom),
     timingOptions(durationMedium, 5)
   );
-  playing ? logoAnimation.play() : logoAnimation.pause()
+  return playing ? logoAnimation.play() : logoAnimation.pause()
 }
