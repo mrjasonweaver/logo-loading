@@ -10,6 +10,7 @@ const contentContainer = document.querySelector('#content');
 
 userForm.addEventListener('submit', (event): Promise<Object> => {
   event.preventDefault();
+  contentContainer.innerHTML = '';
   animateLogo(true);
   const userUrl = `${fetchUserInfoURL}${event.target[0].value}`;
   return fetchUserInfo(userUrl);
@@ -32,13 +33,12 @@ const searchUsers = async (url: RequestInfo): Promise<any> => {
 
 const addContent = content => {
   content.forEach(item => {
-    console.log(item);
     const githubUser = `
-    <div class="github-user">
-      <h2 class="github-user-login">${item.login}</h2>
-      <img class="github-user-avatar" src=${item.avatar_url} />
-    </div>
-  `;
+      <div class="github-user">
+        <h2 class="github-user-login">${item.login}</h2>
+        <img class="github-user-avatar" src=${item.avatar_url} />
+      </div>
+    `;
     contentContainer.insertAdjacentHTML('beforeend', githubUser);
   })
 }
@@ -48,7 +48,6 @@ interface TimingOptions {
   iterations: number
 }
 
-const durationReset = 0;
 const durationSlow = 3000;
 const durationMedium = 800;
 const durationFast = 500;
