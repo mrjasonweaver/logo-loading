@@ -51,3 +51,30 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
   max-width: 900px;
   margin: 50px auto 20px;
 }
+
+#content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.github-user {
+  margin: 5px;
+  position: relative;
+}
+
+.github-user-login {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  background: rgba(0,0,0,.3);
+  padding: 5px;
+}
+
+.github-user-avatar {
+  width: 100px;
+  height: 100px;
+}

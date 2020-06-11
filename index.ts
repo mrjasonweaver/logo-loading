@@ -6,6 +6,7 @@ const topRight = document.querySelector('#triangle-top-right');
 const bottom = document.querySelector('#triangle-bottom');
 const username = document.querySelector('#username');
 const userForm = document.querySelector('#getUserForm');
+const contentContainer = document.querySelector('#content');
 
 userForm.addEventListener('submit', (event): Promise<Object> => {
   event.preventDefault();
@@ -22,17 +23,31 @@ const fetchUserInfo = async (url: RequestInfo): Promise<Object> => {
   return searchUsers(searchUrl);
 }
 
-const searchUsers = async (url: RequestInfo): Promise<String[]> => {
+const searchUsers = async (url: RequestInfo): Promise<any> => {
   let response = await fetch(url);
   let data = await response.json();
   animateLogo(false);
-  return data.items;
+  return addContent(data.items);
+}
+
+const addContent = content => {
+  content.forEach(item => {
+    console.log(item);
+    const githubUser = `
+    <div class="github-user">
+      <h2 class="github-user-login">${item.login}</h2>
+      <img class="github-user-avatar" src=${item.avatar_url} />
+    </div>
+  `;
+    contentContainer.insertAdjacentHTML('beforeend', githubUser);
+  })
 }
 
 interface TimingOptions {
   duration: number,
   iterations: number
 }
+
 const durationReset = 0;
 const durationSlow = 3000;
 const durationMedium = 800;
