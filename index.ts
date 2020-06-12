@@ -25,6 +25,7 @@ interface GitHubUser {
   repos_url: string;
   type: string;
   url: string;
+  location?: string;
 }
 
 const renderGithubUserMarkup = (user: GitHubUser) => {
@@ -48,15 +49,15 @@ userForm.addEventListener('submit', event => {
 const fetchUserInfo = async (url: RequestInfo) => {
   let response = await fetch(url);
   let data = await response.json();
-  const location = data.location;
-  const searchUrl = `${searchUsersURL}?q=+location:${location.split(',')[0]}+type:user`; 
+  const location = data.location.split(',')[0];
+  const searchUrl = `${searchUsersURL}?q=+location:${location}+type:user+-user:${data.login}`; 
   addGithubUser(data, searchUrl);
 };
 
 const searchUsers = async (url: RequestInfo) => {
   let response = await fetch(url);
   let data = await response.json();
-  animateLogo(false);
+  console.log(data);
   addSearchedGithubUsers(data.items);
 };
 
@@ -71,6 +72,7 @@ const addSearchedGithubUsers = (content: GitHubUser[]) => {
     const githubUser = renderGithubUserMarkup(user);
     usersContainer.insertAdjacentHTML('beforeend', githubUser);
   });
+  animateLogo(false);
 };
 
 const timingOptions = (duration: number, iterations: number): TimingOptions => {
