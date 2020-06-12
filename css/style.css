@@ -52,7 +52,7 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
   margin: 50px auto 20px;
 }
 
-#content {
+#github-users {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

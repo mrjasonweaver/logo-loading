@@ -6,7 +6,12 @@ const topRight = document.querySelector('#triangle-top-right');
 const bottom = document.querySelector('#triangle-bottom');
 const username = document.querySelector('#username');
 const userForm = document.querySelector('#getUserForm');
-const contentContainer = document.querySelector('#content');
+const userContainer = document.querySelector('#github-user');
+const usersContainer = document.querySelector('#github-users');
+
+const durationSlow = 3000;
+const durationMedium = 800;
+const durationFast = 500;
 
 interface TimingOptions {
   duration: number,
@@ -15,29 +20,26 @@ interface TimingOptions {
 
 interface GitHubUser {
   avatar_url: string;
-  events_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  gravatar_id: string;
   html_url: string;
-  id: number;
   login: string;
-  node_id: string;
-  organizations_url: string;
-  received_events_url: string;
   repos_url: string;
-  score: number;
-  site_admin: boolean;
-  starred_url: string;
-  subscriptions_url: string;
   type: string;
   url: string;
 }
 
+const renderGithubUserMarkup = (user: GitHubUser) => {
+  return `
+    <a href="${user.html_url}" class="github-user">
+      <h2 class="github-user-login">${user.login}</h2>
+      <img class="github-user-avatar" src=${user.avatar_url} />
+    </a>
+  `
+};
+
 userForm.addEventListener('submit', event => {
   event.preventDefault();
-  contentContainer.innerHTML = '';
+  userContainer.innerHTML = '';
+  usersContainer.innerHTML = '';
   animateLogo(true);
   const userUrl = `${fetchUserInfoURL}${event.target[0].value}`;
   fetchUserInfo(userUrl);
@@ -48,35 +50,32 @@ const fetchUserInfo = async (url: RequestInfo) => {
   let data = await response.json();
   const location = data.location;
   const searchUrl = `${searchUsersURL}?q=+location:${location.split(',')[0]}+type:user`; 
-  searchUsers(searchUrl);
-}
+  addGithubUser(data, searchUrl);
+};
 
 const searchUsers = async (url: RequestInfo) => {
   let response = await fetch(url);
   let data = await response.json();
   animateLogo(false);
-  addContent(data.items);
+  addSearchedGithubUsers(data.items);
+};
+
+const addGithubUser = (user: GitHubUser, searchUrl: RequestInfo) => {
+  const githubUser = renderGithubUserMarkup(user);
+  userContainer.insertAdjacentHTML('beforeend', githubUser);
+  searchUsers(searchUrl);
 }
 
-const addContent = (content: GitHubUser[]) => {
-  content.forEach((item: GitHubUser) => {
-    const githubUser = `
-      <a href="${item.html_url}" class="github-user">
-        <h2 class="github-user-login">${item.login}</h2>
-        <img class="github-user-avatar" src=${item.avatar_url} />
-      </a>
-    `;
-    contentContainer.insertAdjacentHTML('beforeend', githubUser);
+const addSearchedGithubUsers = (content: GitHubUser[]) => {
+  content.forEach((user: GitHubUser) => {
+    const githubUser = renderGithubUserMarkup(user);
+    usersContainer.insertAdjacentHTML('beforeend', githubUser);
   });
-}
-
-const durationSlow = 3000;
-const durationMedium = 800;
-const durationFast = 500;
+};
 
 const timingOptions = (duration: number, iterations: number): TimingOptions => {
   return { duration, iterations }
-}
+};
 
 const translateOptions = (args: Array<string>[]): Keyframe[] => {
   return args.map(item => {
@@ -84,7 +83,7 @@ const translateOptions = (args: Array<string>[]): Keyframe[] => {
       transform: `translate(${item[0]}, ${item[1]})`
     }
   });
-}
+};
 
 const breakOutAnimationBottom: Array<string>[] = [
   ['0px', '0px'],
@@ -98,4 +97,4 @@ const animateLogo = (playing: boolean): void => {
     timingOptions(durationMedium, 5)
   );
   return playing ? logoAnimation.play() : logoAnimation.pause()
-}
+};
