@@ -8,44 +8,66 @@ const username = document.querySelector('#username');
 const userForm = document.querySelector('#getUserForm');
 const contentContainer = document.querySelector('#content');
 
-userForm.addEventListener('submit', (event): Promise<Object> => {
+interface TimingOptions {
+  duration: number,
+  iterations: number
+}
+
+interface GitHubUser {
+  avatar_url: string;
+  events_url: string;
+  followers_url: string;
+  following_url: string;
+  gists_url: string;
+  gravatar_id: string;
+  html_url: string;
+  id: number;
+  login: string;
+  node_id: string;
+  organizations_url: string;
+  received_events_url: string;
+  repos_url: string;
+  score: number;
+  site_admin: boolean;
+  starred_url: string;
+  subscriptions_url: string;
+  type: string;
+  url: string;
+}
+
+userForm.addEventListener('submit', event => {
   event.preventDefault();
   contentContainer.innerHTML = '';
   animateLogo(true);
   const userUrl = `${fetchUserInfoURL}${event.target[0].value}`;
-  return fetchUserInfo(userUrl);
+  fetchUserInfo(userUrl);
 });
 
-const fetchUserInfo = async (url: RequestInfo): Promise<Object> => {
+const fetchUserInfo = async (url: RequestInfo) => {
   let response = await fetch(url);
   let data = await response.json();
   const location = data.location;
   const searchUrl = `${searchUsersURL}?q=+location:${location.split(',')[0]}+type:user`; 
-  return searchUsers(searchUrl);
+  searchUsers(searchUrl);
 }
 
-const searchUsers = async (url: RequestInfo): Promise<any> => {
+const searchUsers = async (url: RequestInfo) => {
   let response = await fetch(url);
   let data = await response.json();
   animateLogo(false);
-  return addContent(data.items);
+  addContent(data.items);
 }
 
-const addContent = content => {
-  content.forEach(item => {
+const addContent = (content: GitHubUser[]) => {
+  content.forEach((item: GitHubUser) => {
     const githubUser = `
-      <div class="github-user">
+      <a href="${item.html_url}" class="github-user">
         <h2 class="github-user-login">${item.login}</h2>
         <img class="github-user-avatar" src=${item.avatar_url} />
-      </div>
+      </a>
     `;
     contentContainer.insertAdjacentHTML('beforeend', githubUser);
-  })
-}
-
-interface TimingOptions {
-  duration: number,
-  iterations: number
+  });
 }
 
 const durationSlow = 3000;
