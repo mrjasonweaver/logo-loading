@@ -30,6 +30,12 @@ interface GitHubUser {
   location?: string;
 }
 
+interface Info {
+  total: string;
+  count: string;
+  city: string;
+}
+
 const renderGithubUser = (user: GitHubUser): string => {
   return `
     <a href="${user.html_url}" class="github-user">
@@ -60,7 +66,7 @@ const fetchUserInfo = async (url: RequestInfo): Promise<void> => {
 const searchUsers = async (url: RequestInfo): Promise<void> => {
   let response = await fetch(url);
   let data = await response.json();
-  const infoObj = {total: data.total_count, count: perPage, city};
+  const infoObj: Info = {total: data.total_count, count: perPage, city};
   title.innerHTML = titleContent(infoObj);
   addSearchedGithubUsers(data.items);
 };
@@ -79,21 +85,13 @@ const addSearchedGithubUsers = (content: GitHubUser[]): void => {
   animateLogo(false);
 };
 
-const titleContent = (info): string => {
+const titleContent = (info: Info): string => {
   const { total, count, city } = info;
   return `Showing ${count} of ${total} GitHub users in ${city}`;
 }
 
 const timingOptions = (duration: number, iterations: number): TimingOptions => {
   return { duration, iterations }
-};
-
-const translateOptions = (args: Array<string>[]): Keyframe[] => {
-  return args.map(item => {
-    return {
-      transform: `translate(${item[0]}, ${item[1]})`
-    }
-  });
 };
 
 const fillOptions = (args: Array<string>[]): Keyframe[] => {
@@ -103,12 +101,6 @@ const fillOptions = (args: Array<string>[]): Keyframe[] => {
     }
   });
 };
-
-const breakOutAnimationBottom: Array<string>[] = [
-  ['0px', '0px'],
-  ['0', '-8px'],
-  ['0px', '0px']
-];
 
 const fillAnimation: Array<string>[] = [
   ['rgba(0,0,0,1)'],
