@@ -2,55 +2,52 @@
 body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
 h1 {
   text-align: center;
+  font-size: 18px;
 }
 #logo-wrap {
-  width: 91px;
-  height: 91px;
-  transform-origin: 50% 60%;
+  display: block;
+  margin: 10px auto;
+  width: 60px;
+  height: 60px;
   will-change: transform, color;
   position: relative;
   z-index: 2;
-  transform: scale(.75);
-  left: 20px;
-  top: 20px;
 }
 #logo {
-  fill: white;
+  display: block;
+  fill: black;
 }
 #site-header {
   width: 100%;
+  height: 210px;
   position: fixed;
-  height: 0px;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: white;
 }
-#site-header:before {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  width: 1500px;
-  height: 1500px;
-  background-color: rgba(223, 78, 113, 1);
-  display: block;
-  top: -400px;
-  left: -1550px;
-  transform: rotate(25deg);
-}
-
+#site-header:before,
 #site-header:after {
   content: '';
   position: absolute;
   z-index: 1;
-  width: 1500px;
-  height: 1500px;
-  background-color: rgba(223, 78, 113, .8);
+  width: 100%;
+  height: auto;
+  background-color: rgba(223, 78, 113, 1);
   display: block;
-  top: -400px;
-  left: -1500px;
-  transform: rotate(25deg);
+  top: 0;
+  left: 0;
+  transform: translateY(50px);
+}
+
+#site-header:after {
+  background-color: rgba(223, 78, 113, .8);
+  transform: translateY(0px);
 }
 
 #main {
-  max-width: 900px;
-  margin: 50px auto 20px;
+  max-width: 1100px;
+  margin: 300px auto 20px;
 }
 
 #getUserForm {
@@ -61,6 +58,8 @@ h1 {
 
 #github-users,
 #github-user {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -69,6 +68,7 @@ h1 {
 
 #github-user {
   margin-bottom: 20px;
+  z-index: 1;
 }
 
 .github-user {

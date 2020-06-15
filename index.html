@@ -17,14 +17,16 @@
         </g>
       </svg>
     </logo>
+    <div class="header-inner-wrap">
+      <h1 id="title">Find GitHub users in your city</h1>
+      <form id="getUserForm">
+        <input type="text" placeholder="github username" id="username" name="username" required>
+        <button type="submit" class="btn">Submit</button>
+      </form>
+      <div id="github-user"></div>
+    </div>
   </header>
   <main id="main">
-    <h1>Find GitHub users in your city</h1>
-    <form id="getUserForm">
-      <input type="text" placeholder="github username" id="username" name="username" required>
-      <button type="submit" class="btn">Submit</button>
-    </form>
-    <div id="github-user"></div>
     <div id="github-users"></div>
   </main>
   <footer>
