@@ -9,7 +9,7 @@ const userForm = document.querySelector('#getUserForm');
 const userContainer = document.querySelector('#github-user');
 const usersContainer = document.querySelector('#github-users');
 
-const durationSlow = 3000;
+const durationSlow = 1200;
 const durationMedium = 800;
 const durationFast = 500;
 
@@ -28,7 +28,7 @@ interface GitHubUser {
   location?: string;
 }
 
-const renderGithubUserMarkup = (user: GitHubUser) => {
+const renderGithubUser = (user: GitHubUser): string => {
   return `
     <a href="${user.html_url}" class="github-user">
       <h2 class="github-user-login">${user.login}</h2>
@@ -46,7 +46,7 @@ userForm.addEventListener('submit', event => {
   fetchUserInfo(userUrl);
 });
 
-const fetchUserInfo = async (url: RequestInfo) => {
+const fetchUserInfo = async (url: RequestInfo): Promise<void> => {
   let response = await fetch(url);
   let data = await response.json();
   const location = data.location.split(',')[0];
@@ -54,23 +54,23 @@ const fetchUserInfo = async (url: RequestInfo) => {
   addGithubUser(data, searchUrl);
 };
 
-const searchUsers = async (url: RequestInfo) => {
+const searchUsers = async (url: RequestInfo): Promise<void> => {
   let response = await fetch(url);
   let data = await response.json();
   console.log(data);
   addSearchedGithubUsers(data.items);
 };
 
-const addGithubUser = (user: GitHubUser, searchUrl: RequestInfo) => {
-  const githubUser = renderGithubUserMarkup(user);
+const addGithubUser = (user: GitHubUser, searchUrl: RequestInfo): void => {
+  const githubUser = renderGithubUser(user);
   userContainer.insertAdjacentHTML('beforeend', githubUser);
   searchUsers(searchUrl);
 }
 
-const addSearchedGithubUsers = (content: GitHubUser[]) => {
+const addSearchedGithubUsers = (content: GitHubUser[]): void => {
   content.forEach((user: GitHubUser) => {
-    const githubUser = renderGithubUserMarkup(user);
-    usersContainer.insertAdjacentHTML('beforeend', githubUser);
+    const githubUser = renderGithubUser(user);
+    return usersContainer.insertAdjacentHTML('beforeend', githubUser);
   });
   animateLogo(false);
 };
