@@ -1,6 +1,8 @@
 * { box-sizing: border-box; }
 body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
-
+h1 {
+  text-align: center;
+}
 #logo-wrap {
   width: 91px;
   height: 91px;
@@ -13,7 +15,6 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
   top: 20px;
 }
 #logo {
-  will-change: transform, color;
   fill: white;
 }
 #site-header {
@@ -52,11 +53,22 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
   margin: 50px auto 20px;
 }
 
-#github-users {
+#getUserForm {
+  display: block;
+  margin: 0 auto 20px;
+  width: 220px;
+}
+
+#github-users,
+#github-user {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: center;
+}
+
+#github-user {
+  margin-bottom: 20px;
 }
 
 .github-user {
@@ -77,4 +89,5 @@ body { background: #f9f9f9; font-family: 'Ubuntu', sans-serif; }
 .github-user-avatar {
   width: 100px;
   height: 100px;
+  border-radius: 100px;
 }

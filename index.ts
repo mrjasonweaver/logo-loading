@@ -57,7 +57,6 @@ const fetchUserInfo = async (url: RequestInfo): Promise<void> => {
 const searchUsers = async (url: RequestInfo): Promise<void> => {
   let response = await fetch(url);
   let data = await response.json();
-  console.log(data);
   addSearchedGithubUsers(data.items);
 };
 
@@ -87,15 +86,29 @@ const translateOptions = (args: Array<string>[]): Keyframe[] => {
   });
 };
 
+const fillOptions = (args: Array<string>[]): Keyframe[] => {
+  return args.map(item => {
+    return {
+      fill: `${item}`
+    }
+  });
+};
+
 const breakOutAnimationBottom: Array<string>[] = [
   ['0px', '0px'],
   ['0', '-8px'],
   ['0px', '0px']
 ];
 
+const fillAnimation: Array<string>[] = [
+  ['rgba(255,255,255,1)'],
+  ['rgba(223, 78, 113, .8)'],
+  ['rgba(255,255,255,1)']
+];
+
 const animateLogo = (playing: boolean): void => {
   const logoAnimation = logo.animate(
-    translateOptions(breakOutAnimationBottom),
+   fillOptions(fillAnimation),
     timingOptions(durationMedium, 5)
   );
   return playing ? logoAnimation.play() : logoAnimation.pause()
