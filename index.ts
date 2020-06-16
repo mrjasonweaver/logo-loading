@@ -56,19 +56,37 @@ userForm.addEventListener('submit', event => {
 });
 
 const fetchUserInfo = async (url: RequestInfo): Promise<void> => {
-  let response = await fetch(url);
-  let data = await response.json();
-  city = data.location.split(',')[0];
-  const searchUrl = `${searchUsersURL}?q=+location:${city}+type:user+-user:${data.login}&page=1&per_page=${perPage}`; 
-  addGithubUser(data, searchUrl);
+  try {
+    let response = await fetch(url);
+    if (response.status === 200) {
+      let data = await response.json();
+      city = data.location.split(',')[0];
+      const searchUrl = `${searchUsersURL}?q=+location:${city}+type:user+-user:${data.login}&page=1&per_page=${perPage}`; 
+      addGithubUser(data, searchUrl);
+    } else if (response.status === 404) {
+      title.innerHTML = 'GitHub user not found';
+      animateLogo(false);
+    } else {
+      title.innerHTML = 'Unable to fetch user';
+      animateLogo(false);
+    }
+  } catch(err) {
+    title.innerHTML = err;
+    animateLogo(false);
+  }
 };
 
 const searchUsers = async (url: RequestInfo): Promise<void> => {
-  let response = await fetch(url);
-  let data = await response.json();
-  const infoObj: Info = {total: data.total_count, count: perPage, city};
-  title.innerHTML = titleContent(infoObj);
-  addSearchedGithubUsers(data.items);
+  try {
+    let response = await fetch(url);
+    let data = await response.json();
+    const infoObj: Info = {total: data.total_count, count: perPage, city};
+    title.innerHTML = titleContent(infoObj);
+    addSearchedGithubUsers(data.items);
+  } catch(err) {
+    title.innerHTML = err;
+    animateLogo(false);
+  }
 };
 
 const addGithubUser = (user: GitHubUser, searchUrl: RequestInfo): void => {
