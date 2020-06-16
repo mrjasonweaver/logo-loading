@@ -121,10 +121,10 @@ const fillOptions = (args: Array<string>[]): Keyframe[] => {
 };
 
 const fillAnimation: Array<string>[] = [
-  ['rgba(0,0,0,1)'],
+  ['rgba(22,22,22,1)'],
   ['rgba(200, 100, 100, .7)'],
   ['rgba(170, 255, 150, .7)'],
-  ['rgba(0,0,0,1)']
+  ['rgba(22,22,22,1)']
 ];
 
 const animateLogo = (playing: boolean): void => {
